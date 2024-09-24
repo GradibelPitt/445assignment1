@@ -149,6 +149,7 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
         numberOfEntries--;
         System.out.println(head + " retrieved from head of sequence");
         return head;
+    }
 
     @Override
     public T deleteTail() {
@@ -161,7 +162,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
         System.out.println(tail + " retrieved from tail of sequence");
         return tail;
     }
-
 
     @Override
     public boolean trim(int numItems) {
