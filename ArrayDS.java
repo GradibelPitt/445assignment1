@@ -2,6 +2,37 @@ import java.util.Arrays;
 
 public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterface<T>, ReorderInterface, Comparable<ArrayDS<T>> {
 
+
+    /**
+     * main for debugging
+     */
+    public static void main(String[] args) {
+        ArrayDS<Integer> arrayDS = new ArrayDS<>();
+        
+        arrayDS.append(1);
+        arrayDS.append(2);
+        arrayDS.append(3);
+        System.out.println("After appending 1, 2, 3: " + arrayDS.toString());
+
+        arrayDS.prefix(0);
+        System.out.println("After prefixing 0: " + arrayDS.toString());
+
+        arrayDS.deleteHead();
+        System.out.println("After deleting head: " + arrayDS.toString());
+
+        arrayDS.deleteTail();
+        System.out.println("After deleting tail: " + arrayDS.toString());
+
+        arrayDS.reverse();
+        System.out.println("After reversing: " + arrayDS.toString());
+
+        arrayDS.rotateRight();
+        System.out.println("After rotating right: " + arrayDS.toString());
+
+        arrayDS.rotateLeft();
+        System.out.println("After rotating left: " + arrayDS.toString());
+    }
+ 
     private T[] sequence;
     private int numberOfEntries;
     private static final int DEFAULT_CAPACITY = 10;
@@ -12,6 +43,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         numberOfEntries = 0;
     }
 
+    /**
+     * copy constructor 
+     */
     @SuppressWarnings("unchecked")
     public ArrayDS(ArrayDS<T> other) {
         sequence = (T[]) new Comparable[other.sequence.length];
@@ -19,6 +53,10 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         this.numberOfEntries = other.numberOfEntries;
     }
 
+    /**
+     * adds an item to the end of the sequence
+     * resizes array if full
+     */
     @Override
     public void append(T item) {
         if (numberOfEntries == sequence.length) {
@@ -28,6 +66,10 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         numberOfEntries++;
     }
 
+    /** 
+     * adds an item to the beginning of the sequence
+     * resizes array if full
+     */
     @Override
     public void prefix(T item) {
         if (numberOfEntries == sequence.length) {
@@ -40,6 +82,10 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         numberOfEntries++;
     }
 
+    /**
+     * inserts an item at specified position
+     * moves subsequent items to the right
+     */
     @Override
     public void insert(T item, int position) {
         if (position < 0 || position > numberOfEntries) {
@@ -54,6 +100,11 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         sequence[position] = item;
         numberOfEntries++;
     }
+
+    /**
+     * retrives the item at the specified position
+     * if invalid, throws exception
+     */
 
     @Override
     public T itemAt(int position) {
@@ -73,6 +124,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return numberOfEntries;
     }
 
+    /**
+     * returns the first item in the sequence
+     */
     @Override
     public T first() {
         if (isEmpty()) {
@@ -81,6 +135,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return sequence[0];
     }
 
+    /**
+     * returns the last item in the sequence
+     */
     @Override
     public T last() {
         if (isEmpty()) {
@@ -89,6 +146,10 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return sequence[numberOfEntries - 1];
     }
 
+    /** 
+     * finds the predecesspr of the given item and returns it
+     * returns null if the item not found or the item is at the start
+     */
     @Override
     public T predecessor(T item) {
         for (int i = 1; i < numberOfEntries; i++) {
@@ -99,6 +160,10 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return null;
     }
 
+
+    /**
+     * returns the frequency of given item in the sequence
+     */
     @Override
     public int getFrequencyOf(T item) {
         int count = 0;
@@ -110,12 +175,19 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return count;
     }
 
+    /**
+     * clear the sequence by resetting numberOfEntries
+     */
     @Override
     public void clear() {
         numberOfEntries = 0;
         Arrays.fill(sequence, null);
     }
 
+    /** 
+     * returns the index of the last occurrence of the given item
+     * returns -1 if item not found
+     */
     @Override
     public int lastOccurrenceOf(T item) {
         for (int i = numberOfEntries - 1; i >= 0; i--) {
@@ -126,6 +198,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return -1;
     }
 
+    /**
+     * deletes and returns the first item in the sequence
+     */
     @Override
     public T deleteHead() {
         if (isEmpty()) {
@@ -139,6 +214,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return head;
     }
 
+    /** 
+     * deletes and returns the last item in the sequence
+     */
     @Override
     public T deleteTail() {
         if (isEmpty()) {
@@ -190,6 +268,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         }
     }
 
+    /**
+     * rotates the sequence to the left and moving the first element to the end
+     */
     @Override
     public void rotateLeft() {
         if (numberOfEntries > 0) {
@@ -201,6 +282,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         }
     }
 
+    /**
+     * based on old and new positions to shuffle items
+     */
     @Override
     public void shuffle(int[] oldPositions, int[] newPositions) {
         if (oldPositions.length != newPositions.length) {
@@ -243,6 +327,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return result.toString();
     }
 
+    /**
+     * doubles the size of the underlying array when it's full
+     */
     @SuppressWarnings("unchecked")
     private void resize() {
         sequence = Arrays.copyOf(sequence, sequence.length * 2);
