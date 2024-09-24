@@ -13,9 +13,9 @@ Source code (.java) file name(s):
 
 ______________________ArrayDS.java___________________________________
 
-________________________EmptySequenceException.java_________________________________
+________________________________________________________
 
-Does your program compile without errors?: ______Yes______
+Does your program compile without errors?: ______No_____
 
 If not, what is/are the error(s)?:
 

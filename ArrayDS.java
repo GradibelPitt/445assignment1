@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+
 public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterface<T>, ReorderInterface, Comparable<ArrayDS<T>> {
 
 
@@ -358,3 +359,9 @@ public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterfa
         return result;
     }
 }
+
+public static class EmptySequenceException extends RuntimeException {
+        public EmptySequenceException(String message) {
+            super(message);
+        }
+    }
