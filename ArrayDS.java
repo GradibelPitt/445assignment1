@@ -1,13 +1,6 @@
 import java.util.Arrays;
 
-// Custom Exception class for EmptySequence
-public class EmptySequenceException extends RuntimeException {
-    public EmptySequenceException(String message) {
-        super(message);
-    }
-}
-
-public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, ReorderInterface, Comparable<ArrayDS<T>> {
+public class ArrayDS<T extends Comparable<? super T>> implements SequenceInterface<T>, ReorderInterface, Comparable<ArrayDS<T>> {
 
     private T[] sequence;
     private int numberOfEntries;
@@ -33,7 +26,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
         }
         sequence[numberOfEntries] = item;
         numberOfEntries++;
-        System.out.println(item + " appended to sequence");
     }
 
     @Override
@@ -46,7 +38,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
         }
         sequence[0] = item;
         numberOfEntries++;
-        System.out.println(item + " prefixed to sequence");
     }
 
     @Override
@@ -123,7 +114,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
     public void clear() {
         numberOfEntries = 0;
         Arrays.fill(sequence, null);
-        System.out.println("Sequence cleared.");
     }
 
     @Override
@@ -139,7 +129,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
     @Override
     public T deleteHead() {
         if (isEmpty()) {
-            System.out.println("Nothing in the sequence");
             throw new EmptySequenceException("Sequence is empty");
         }
         T head = sequence[0];
@@ -147,19 +136,16 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
             sequence[i - 1] = sequence[i];
         }
         numberOfEntries--;
-        System.out.println(head + " retrieved from head of sequence");
         return head;
     }
 
     @Override
     public T deleteTail() {
         if (isEmpty()) {
-            System.out.println("Nothing in the sequence");
             throw new EmptySequenceException("Sequence is empty");
         }
         T tail = sequence[numberOfEntries - 1];
         numberOfEntries--;
-        System.out.println(tail + " retrieved from tail of sequence");
         return tail;
     }
 
@@ -191,7 +177,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
             sequence[i] = sequence[numberOfEntries - 1 - i];
             sequence[numberOfEntries - 1 - i] = temp;
         }
-        System.out.println("Sequence reversed.");
     }
 
     @Override
@@ -202,7 +187,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
                 sequence[i] = sequence[i - 1];
             }
             sequence[0] = lastItem;
-            System.out.println("Sequence rotated right.");
         }
     }
 
@@ -214,7 +198,6 @@ public class ArrayDS<T extends Comparable<T>> implements SequenceInterface<T>, R
                 sequence[i] = sequence[i + 1];
             }
             sequence[numberOfEntries - 1] = firstItem;
-            System.out.println("Sequence rotated left.");
         }
     }
 
